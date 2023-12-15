@@ -31,6 +31,7 @@ export function initSetup(vm: Component) {
   if (setup) {
     const ctx = (vm._setupContext = createSetupContext(vm))
 
+    const prevInst = currentInstance;
     setCurrentInstance(vm)
     pushTarget()
     const setupResult = invokeWithErrorHandling(
@@ -41,7 +42,7 @@ export function initSetup(vm: Component) {
       `setup`
     )
     popTarget()
-    setCurrentInstance()
+    setCurrentInstance(prevInst)
 
     if (isFunction(setupResult)) {
       // render function
